@@ -41,11 +41,22 @@ export function displayResults(data) {
     // Rellenar banderas rojas
     const redFlagsList = document.getElementById('flagsList');
     redFlagsList.innerHTML = '';
+
+    const categoryTranslations = {
+        "privacy": "Privacidad",
+        "social_impact": "Impacto Social",
+        "social": "Impacto Social",
+        "transparency": "Transparencia",
+        "fairness": "Equidad",
+        "technical": "Técnico"
+    };
+
     if (data.red_flags && data.red_flags.length > 0) {
         data.red_flags.forEach(flag => {
             const li = document.createElement('div');
             li.className = 'flag-item';
-            li.innerHTML = `<strong>${flag.category}:</strong> ${flag.description}`;
+            const categoryInSpanish = categoryTranslations[flag.category.toLowerCase()] || flag.category;
+            li.innerHTML = `<strong>${categoryInSpanish}:</strong> ${flag.description}`;
             redFlagsList.appendChild(li);
         });
         document.getElementById('redFlags').style.display = 'block';

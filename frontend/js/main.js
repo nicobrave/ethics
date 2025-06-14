@@ -9,11 +9,16 @@ import { showLoading, hideLoading, displayResults, displayError } from './ui.js'
 // Hacemos que la función sea accesible globalmente para el `onclick` del HTML.
 window.analyzeStartup = async function() {
     const urlInput = document.getElementById('websiteUrl');
-    const url = urlInput.value;
+    let url = urlInput.value.trim();
 
     if (!url) {
         displayError("Por favor, introduce una URL para analizar.");
         return;
+    }
+
+    // Añadir 'https://' si no se especifica un protocolo.
+    if (!/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;
     }
 
     showLoading();
