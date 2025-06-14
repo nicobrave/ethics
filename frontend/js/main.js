@@ -37,4 +37,58 @@ window.analyzeStartup = async function() {
     } finally {
         hideLoading();
     }
-} 
+}
+
+// Modal handling
+document.addEventListener('DOMContentLoaded', () => {
+    // Get modals
+    const privacyModal = document.getElementById('privacy-modal');
+    const termsModal = document.getElementById('terms-modal');
+    const promptModal = document.getElementById('prompt-modal');
+
+    // Get trigger links
+    const privacyLink = document.getElementById('privacy-link');
+    const termsLink = document.getElementById('terms-link');
+    const promptLink = document.getElementById('prompt-link');
+
+    // Get close buttons
+    const closeBtns = document.querySelectorAll('.close-btn');
+
+    // Open modals
+    if (privacyLink) {
+        privacyLink.onclick = (e) => {
+            e.preventDefault();
+            privacyModal.style.display = 'block';
+        }
+    }
+    if (termsLink) {
+        termsLink.onclick = (e) => {
+            e.preventDefault();
+            termsModal.style.display = 'block';
+        }
+    }
+    if (promptLink) {
+        promptLink.onclick = (e) => {
+            e.preventDefault();
+            promptModal.style.display = 'block';
+        }
+    }
+
+    // Close modals with close button
+    closeBtns.forEach(btn => {
+        btn.onclick = () => {
+            if (privacyModal) privacyModal.style.display = 'none';
+            if (termsModal) termsModal.style.display = 'none';
+            if (promptModal) promptModal.style.display = 'none';
+        }
+    });
+
+    // Close modals by clicking outside
+    window.onclick = (event) => {
+        if (event.target == privacyModal || event.target == termsModal || event.target == promptModal) {
+            if (privacyModal) privacyModal.style.display = 'none';
+            if (termsModal) termsModal.style.display = 'none';
+            if (promptModal) promptModal.style.display = 'none';
+        }
+    }
+}); 

@@ -376,6 +376,15 @@
             margin-top: 4rem;
         }
         
+        footer a {
+            color: #4ecdc4;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .analysis-section {
@@ -389,6 +398,53 @@
             .hero p {
                 font-size: 1.1rem;
             }
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.6);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #444;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .modal-content h2 {
+            margin-top: 0;
+            color: #4ecdc4;
+        }
+
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -477,76 +533,107 @@
             </div>
         </section>
         
-        <section class="features">
-            <h2>¿Cómo detectamos lo que otros no ven?</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🕷️</div>
-                    <div class="feature-title">Scraping Profundo</div>
-                    <div class="feature-desc">No solo el landing. Analizamos términos de servicio, políticas de privacidad, documentación técnica, y hasta el código fuente público.</div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🧠</div>
-                    <div class="feature-title">Detección de Patrones</div>
-                    <div class="feature-desc">Nuestra IA identifica lenguaje evasivo, promesas irreales, dark patterns, y modelos de negocio opacos que humanos racionalizan.</div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">⚠️</div>
-                    <div class="feature-title">Señales de Alerta</div>
-                    <div class="feature-desc">"Colección de datos excesiva", "Monetización de vulnerabilidades", "Impacto social negativo" - detectamos lo que importa.</div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <div class="feature-title">Score Objetivo</div>
-                    <div class="feature-desc">Puntuación de 0-100 basada en criterios específicos, sin sesgos humanos ni intereses comerciales.</div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <div class="feature-title">Modelo de Confianza Cero</div>
-                    <div class="feature-desc">No confiamos en promesas. Analizamos evidencia tangible: políticas, patrones de diseño y lenguaje para un veredicto objetivo.</div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <div class="feature-title">Análisis Instantáneo</div>
-                    <div class="feature-desc">Resultados en segundos. Perfecto para inversores, usuarios, o reguladores que necesitan evaluación rápida.</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="how-it-works" style="margin-top: 4rem; text-align: center;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 3rem; background: linear-gradient(45deg, #4ecdc4, #45b7d1); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">¿Cómo Funciona Esto?</h2>
+        <section class="how-it-works" id="methodology">
+            <h2 style="font-size: 2.5rem; margin-bottom: 3rem; background: linear-gradient(45deg, #4ecdc4, #45b7d1); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Nuestra Metodología de Análisis</h2>
             <div class="feature-grid">
                 <div class="feature-card">
                     <div class="feature-icon">1. 🕷️</div>
-                    <div class="feature-title">Scraping Automatizado</div>
-                    <div class="feature-desc">Un robot (Playwright) visita el sitio web, lee su contenido, políticas de privacidad y términos de servicio, tal como lo haría un usuario.</div>
+                    <div class="feature-title">Scraping Profundo</div>
+                    <div class="feature-desc">Un robot (Playwright) visita la URL y lee el contenido público, incluyendo términos de servicio y políticas de privacidad, para obtener una visión completa.</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">2. 🧠</div>
                     <div class="feature-title">Análisis con IA</div>
-                    <div class="feature-desc">El contenido extraído se envía a un modelo de IA (Gemini) con un prompt especializado para detectar señales de alerta y patrones éticos.</div>
+                    <div class="feature-desc">El contenido se envía a un modelo de IA (Gemini) con un prompt especializado para detectar patrones anti-éticos, dark patterns y lenguaje evasivo.</div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">3. 📊</div>
                     <div class="feature-title">Puntuación Objetiva</div>
-                    <div class="feature-desc">La respuesta estructurada de la IA se procesa para generar la puntuación final y los resultados detallados que ves en pantalla.</div>
+                    <div class="feature-desc">La respuesta estructurada de la IA se procesa para generar la puntuación final y los resultados detallados que ves en pantalla, sin sesgos humanos.</div>
                 </div>
             </div>
-            <p style="margin-top: 2rem; opacity: 0.8;"><strong>Tu Privacidad es Importante:</strong> La URL que analizas y los resultados no se almacenan ni se comparten.</p>
+            <div class="justification" style="margin-top: 3rem; text-align: left;">
+                <h3 style="margin-bottom: 1rem;">Nuestro Código Fuente Ético: El Prompt</h3>
+                <p>La clave de nuestro análisis no es una "caja negra". Es un <a href="#" id="prompt-link">prompt abierto</a> diseñado para ser crítico y objetivo. Le damos a la IA un marco de trabajo ético y le pedimos que evalúe el contenido basándose en principios de privacidad, transparencia, equidad e impacto social.</p>
+            </div>
+             <p style="margin-top: 2rem; opacity: 0.8;"><strong>Descargo de Responsabilidad:</strong> Este es un sistema automatizado. Como toda IA, es una herramienta poderosa pero puede tener limitaciones. Sus resultados deben ser usados como una guía informada, no como una verdad absoluta.</p>
         </section>
 
     </div>
     
     <footer>
         <p>&copy; 2025 AI Ethics Detector - Construyendo transparencia en el ecosistema de IA</p>
-        <p>🌟 Servicio gratuito - Sin sesgos, sin agenda, solo verdad</p>
+        <p>
+            <a href="#" id="terms-link">Términos de Servicio</a> | <a href="#" id="privacy-link">Política de Privacidad</a>
+        </p>
     </footer>
+
+    <!-- Modals -->
+    <div id="privacy-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Política de Privacidad</h2>
+            <p><strong>Fecha de vigencia:</strong> 14 de Junio de 2025</p>
+            <p><strong>1. Datos que Procesamos:</strong> Cuando usas nuestro servicio, procesamos únicamente la URL del sitio web que proporcionas. No solicitamos, recopilamos ni almacenamos ninguna otra información personal tuya (como nombre, correo electrónico o dirección IP).</p>
+            <p><strong>2. Uso de la Información:</strong> La URL proporcionada se utiliza exclusivamente para el análisis ético automatizado. Se envía a un modelo de lenguaje de terceros (Google Gemini) como parte del proceso. La URL y los resultados del análisis no se guardan en nuestras bases de datos.</p>
+            <p><strong>3. Cookies:</strong> No utilizamos cookies ni tecnologías de seguimiento.</p>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Términos y Condiciones de Servicio</h2>
+            <p><strong>Fecha de vigencia:</strong> 14 de Junio de 2025</p>
+            <p><strong>1. Aceptación:</strong> Al utilizar AI Ethics Detector, aceptas estos términos y condiciones.</p>
+            <p><strong>2. Naturaleza del Servicio:</strong> El servicio proporciona un análisis ético automatizado generado por una IA. Los resultados son para fines informativos y deben ser considerados como una guía orientativa, no como un veredicto final.</p>
+            <p><strong>3. Exclusión de Responsabilidad:</strong> No nos hacemos responsables de las decisiones (de inversión, negocio o de cualquier otra índole) que se tomen basándose en la información de este servicio. Se recomienda realizar una debida diligencia adicional.</p>
+        </div>
+    </div>
     
+    <div id="prompt-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Nuestro Prompt de Análisis</h2>
+            <p>Este es el texto exacto que enviamos a la IA (Google Gemini) para que realice su análisis. La transparencia es fundamental.</p>
+            <pre style="white-space: pre-wrap; background-color: #111; padding: 15px; border-radius: 5px; color: #eee; font-family: monospace; font-size: 0.9em; line-height: 1.6; word-wrap: break-word;"><code>Eres un experto analista de ética en IA. Tu trabajo es evaluar startups de IA de manera objetiva y sin sesgos.
+
+Analiza el siguiente contenido web y determina si la propuesta es ética o no. Considera:
+
+1. PRIVACIDAD: ¿Cómo manejan los datos personales? ¿Hay transparencia?
+2. IMPACTO SOCIAL: ¿Beneficia o perjudica a la sociedad? ¿Explota vulnerabilidades?
+3. TRANSPARENCIA: ¿Es claro cómo funciona? ¿Ocultan información importante?
+4. EQUIDAD: ¿Discrimina o es sesgado? ¿Es justo para todos los usuarios?
+
+Responde ÚNICAMENTE con un objeto JSON válido que siga esta estructura:
+{
+    "overall_score": 0-100,
+    "category": "ethical|warning|danger",
+    "title": "Título descriptivo",
+    "justification": "Explicación detallada de 2-3 párrafos",
+    "criteria_scores": {
+        "privacy": 0-10,
+        "social_impact": 0-10,
+        "transparency": 0-10,
+        "fairness": 0-10
+    },
+    "red_flags": [
+        {
+            "severity": "low|medium|high",
+            "category": "Privacidad|Impacto Social|Transparencia|Equidad",
+            "description": "Descripción del problema",
+            "evidence": "Evidencia específica del contenido"
+        }
+    ],
+    "detected_patterns": ["patrón1", "patrón2"],
+    "confidence": 0.0-1.0
+}
+
+Se ULTRA CRÍTICO y objetivo. Detecta patrones ocultos, dark patterns, lenguaje evasivo. No incluyas nada antes o después del JSON.</code></pre>
+            <p style="margin-top: 1.5rem; text-align: center;">¿Tienes sugerencias sobre esto? Escríbeme a <a href="mailto:nico@recomai.cl" style="color: #4ecdc4;">nico@recomai.cl</a></p>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="js/main.js"></script>
 </body>
