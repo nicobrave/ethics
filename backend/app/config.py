@@ -29,8 +29,8 @@ class Settings(BaseSettings):
     ]
     RATE_LIMIT_PER_MINUTE: int = 10
     MAX_CONCURRENT_ANALYSES: int = 5
-    USER_AGENT: str = "EthicsDetector/1.0"
-    SCRAPING_TIMEOUT: int = 30
-    MAX_PAGE_SIZE: str = "5MB"
+    USER_AGENT: str = os.getenv("USER_AGENT", "EthicsDetector/1.0")
+    SCRAPING_TIMEOUT: int = int(os.getenv("SCRAPING_TIMEOUT", "60"))
+    MAX_PAGE_SIZE: str = os.getenv("MAX_PAGE_SIZE", "5MB")
 
 settings = Settings() 
