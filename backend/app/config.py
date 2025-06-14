@@ -12,11 +12,10 @@ class Settings(BaseSettings):
 
     GOOGLE_API_KEY: str
     DATABASE_URL: str = "sqlite:///./ethics_detector.db"
-    REDIS_URL: str = "redis://localhost:6379"
     DEBUG: bool = False
     SECRET_KEY: str = "your-secret-key-change-this"
-    CORS_ORIGINS: List[str] = ["http://localhost:3000"]
-    ALLOWED_HOSTS: List[str] = ["localhost", "127.0.0.1"]
+    CORS_ORIGINS: List[str] = ["http://localhost:3000", "https://ethics.recomai.cl"]
+    ALLOWED_HOSTS: List[str] = ["localhost", "127.0.0.1", "ethics.recomai.cl"]
     RATE_LIMIT_PER_MINUTE: int = 10
     MAX_CONCURRENT_ANALYSES: int = 5
     USER_AGENT: str = "EthicsDetector/1.0"

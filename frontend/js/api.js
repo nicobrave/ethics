@@ -1,5 +1,5 @@
 export async function analyzeStartupAPI(url) {
-    const response = await fetch('http://localhost:8000/api/v1/analyze', {
+    const response = await fetch('/api/v1/analyze', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
