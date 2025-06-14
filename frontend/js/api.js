@@ -1,5 +1,5 @@
 export async function analyzeStartupAPI(url) {
-    const response = await fetch('/api/v1/analyze', {
+    const response = await fetch('https://ethics-36kr.onrender.com/api/v1/analyze', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
