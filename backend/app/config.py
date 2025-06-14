@@ -17,12 +17,14 @@ class Settings(BaseSettings):
     CORS_ORIGINS: List[str] = [
         "http://localhost:3000", 
         "https://ethics.recomai.cl",
+        "https://www.ethics.recomai.cl",
         "https://ethics-frontend.onrender.com"
     ]
     ALLOWED_HOSTS: List[str] = [
         "localhost", 
         "127.0.0.1", 
         "ethics.recomai.cl",
+        "www.ethics.recomai.cl",
         "ethics-36kr.onrender.com"
     ]
     RATE_LIMIT_PER_MINUTE: int = 10
