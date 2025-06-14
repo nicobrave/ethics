@@ -28,7 +28,7 @@ window.analyzeStartup = async function() {
         }
     } catch (error) {
         console.error('Error en el análisis:', error);
-        displayError(error.message || 'No se pudo conectar con el servidor de análisis.');
+        displayError(error.message);
     } finally {
         hideLoading();
     }

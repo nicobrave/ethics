@@ -58,5 +58,5 @@ export function displayResults(data) {
 
 export function displayError(message) {
     // Podríamos crear un modal o una notificación más elegante, pero por ahora una alerta servirá.
-    alert(`Error: ${message}`);
+    alert(`Error en el análisis:\n\n${message}`);
 } 
