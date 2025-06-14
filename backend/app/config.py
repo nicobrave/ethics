@@ -14,8 +14,17 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./ethics_detector.db"
     DEBUG: bool = False
     SECRET_KEY: str = "your-secret-key-change-this"
-    CORS_ORIGINS: List[str] = ["http://localhost:3000", "https://ethics.recomai.cl"]
-    ALLOWED_HOSTS: List[str] = ["localhost", "127.0.0.1", "ethics.recomai.cl"]
+    CORS_ORIGINS: List[str] = [
+        "http://localhost:3000", 
+        "https://ethics.recomai.cl",
+        "https://ethics-frontend.onrender.com"
+    ]
+    ALLOWED_HOSTS: List[str] = [
+        "localhost", 
+        "127.0.0.1", 
+        "ethics.recomai.cl",
+        "ethics-36kr.onrender.com"
+    ]
     RATE_LIMIT_PER_MINUTE: int = 10
     MAX_CONCURRENT_ANALYSES: int = 5
     USER_AGENT: str = "EthicsDetector/1.0"
