@@ -7,16 +7,23 @@ export async function analyzeStartupAPI(url) {
         body: JSON.stringify({ url: url, deep_scan: false })
     });
 
-    if (!response.ok) {
-        try {
-            const errorBody = await response.json();
-            console.error("Server validation error:", errorBody);
-            const detail = errorBody.detail ? JSON.stringify(errorBody.detail) : 'No se proporcionaron detalles adicionales.';
-            throw new Error(`El servidor respondió con un error ${response.status}. Detalles: ${detail}`);
-        } catch (e) {
-            throw new Error(`El servidor respondió con un error ${response.status} y la respuesta no pudo ser leída.`);
-        }
+    if (response.ok) {
+        return await response.json();
     }
 
-    return await response.json();
+    // Manejar errores de forma más robusta
+    let errorDetail = 'No se pudo obtener el detalle del error del servidor.';
+    try {
+        const errorBody = await response.json();
+        if (errorBody.detail && Array.isArray(errorBody.detail)) {
+            // Formatear el error de validación de FastAPI para que sea legible
+            errorDetail = errorBody.detail.map(err => `Campo: '${err.loc.join('.')}', Mensaje: ${err.msg}`).join('; ');
+        } else if (errorBody.detail) {
+            errorDetail = JSON.stringify(errorBody.detail);
+        }
+    } catch (e) {
+        errorDetail = 'La respuesta de error del servidor no estaba en formato JSON.';
+    }
+
+    throw new Error(`El servidor respondió con un error ${response.status}. Detalles: ${errorDetail}`);
 } 
