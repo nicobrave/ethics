@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Ethics Detector - ¿Tu startup de IA es realmente ética?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.9);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 3rem;
+        }
+        
+        /* Main content */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #fff, #ff6b6b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .problem-highlight {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .problem-highlight h3 {
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+        
+        /* Analysis Section */
+        .analysis-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+        }
+        
+        .url-input-container {
+            margin-bottom: 2rem;
+        }
+        
+        .input-wrapper {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .url-input {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .url-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .url-input:focus {
+            border-color: #4ecdc4;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.3);
+        }
+        
+        .analyze-btn {
+            display: block;
+            margin: 2rem auto;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .analyze-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+        }
+        
+        .analyze-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 2rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .loading-steps {
+            opacity: 0.7;
+        }
+        
+        /* Results */
+        .results {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ethics-score {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .score-ethical {
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            color: white;
+        }
+        
+        .score-warning {
+            background: linear-gradient(45deg, #fdcb6e, #e17055);
+            color: white;
+        }
+        
+        .score-danger {
+            background: linear-gradient(45deg, #d63031, #e84393);
+            color: white;
+        }
+        
+        .score-number {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        
+        .justification {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        .criteria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .criteria-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .criteria-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .criteria-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .criteria-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .criteria-score {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        /* Red Flags */
+        .red-flags {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .red-flags h4 {
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+        
+        .flag-item {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+        
+        .flag-item::before {
+            content: "⚠️";
+            margin-right: 0.5rem;
+        }
+        
+        /* Features */
+        .features {
+            margin: 4rem 0;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            opacity: 0.7;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .analysis-section {
+                padding: 2rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="bg-overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">⚖️ AI Ethics Detector ⚖️ </div>
+            <div class="tagline">Análisis objetivo de startups de IA sin sesgos humanos</div>
+        </header>
+        
+        <section class="hero">
+            <h1>¿Tu startup de IA es realmente ética?</h1>
+            <p>Descubre la verdad detrás de cualquier propuesta de IA. Nuestra máquina detecta lo que los humanos racionalizamos o pasamos por alto.</p>
+            
+            <div class="problem-highlight">
+                <h3>🚨 El Problema</h3>
+                <p>Muchas startups "éticas" en realidad explotan vulnerabilidades humanas, violan privacidad o causan daño social. Los creadores tienen sesgos, los inversores buscan rentabilidad. <strong>Solo una máquina puede ser verdaderamente objetiva.</strong></p>
+            </div>
+        </section>
+        
+        <section class="analysis-section">
+            <div class="url-input-container">
+                <h2 style="text-align: center; margin-bottom: 2rem;">Analizar Startup</h2>
+                <div class="input-wrapper">
+                    <input type="url" class="url-input" id="websiteUrl" placeholder="https://startup-ai.com" required>
+                </div>
+                <button class="analyze-btn" id="analyze-btn" onclick="analyzeStartup()">
+                    🔍 Analizar Ahora (Gratis)
+                </button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Analizando startup...</div>
+                <div class="loading-steps">
+                    <div id="step1">✓ Scrapeando sitio web completo</div>
+                    <div id="step2" style="opacity: 0.5;">⏳ Analizando términos de servicio</div>
+                    <div id="step3" style="opacity: 0.5;">⏳ Detectando patrones anti-éticos</div>
+                    <div id="step4" style="opacity: 0.5;">⏳ Evaluando impacto social</div>
+                </div>
+            </div>
+            
+            <div class="results" id="results">
+                <div class="ethics-score" id="ethicsScore">
+                    <div class="score-number" id="scoreNumber">85</div>
+                    <div id="scoreText">Cuestionable</div>
+                </div>
+                
+                <div class="justification" id="justification">
+                    <h3>📋 Análisis Detallado</h3>
+                    <p id="justificationText">Esta startup presenta patrones mixtos. Aunque tiene elementos positivos, se detectaron varias señales de alerta que requieren atención...</p>
+                </div>
+                
+                <div class="red-flags" id="redFlags" style="display: none;">
+                    <h4>🚩 Señales de Alerta Detectadas</h4>
+                    <div id="flagsList">
+                        <!-- Flags will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="criteria-grid">
+                    <div class="criteria-card">
+                        <div class="criteria-icon">🔒</div>
+                        <div class="criteria-title">Privacidad</div>
+                        <div class="criteria-score" id="privacyScore">7/10</div>
+                    </div>
+                    <div class="criteria-card">
+                        <div class="criteria-icon">👥</div>
+                        <div class="criteria-title">Impacto Social</div>
+                        <div class="criteria-score" id="socialScore">6/10</div>
+                    </div>
+                    <div class="criteria-card">
+                        <div class="criteria-icon">💡</div>
+                        <div class="criteria-title">Transparencia</div>
+                        <div class="criteria-score" id="transparencyScore">5/10</div>
+                    </div>
+                    <div class="criteria-card">
+                        <div class="criteria-icon">⚖️</div>
+                        <div class="criteria-title">Equidad</div>
+                        <div class="criteria-score" id="fairnessScore">8/10</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="features">
+            <h2>¿Cómo Detectamos lo que Otros No Ven?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🕷️</div>
+                    <div class="feature-title">Scraping Profundo</div>
+                    <div class="feature-desc">No solo el landing. Analizamos términos de servicio, políticas de privacidad, documentación técnica, y hasta el código fuente público.</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <div class="feature-title">Detección de Patrones</div>
+                    <div class="feature-desc">Nuestra IA identifica lenguaje evasivo, promesas irreales, dark patterns, y modelos de negocio opacos que humanos racionalizan.</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚠️</div>
+                    <div class="feature-title">Señales de Alerta</div>
+                    <div class="feature-desc">"Colección de datos excesiva", "Monetización de vulnerabilidades", "Impacto social negativo" - detectamos lo que importa.</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Score Objetivo</div>
+                    <div class="feature-desc">Puntuación de 0-100 basada en criterios específicos, sin sesgos humanos ni intereses comerciales.</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Casos Reales</div>
+                    <div class="feature-desc">Comparamos con una base de datos de startups conocidas: desde las más éticas hasta las más problemáticas.</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Análisis Instantáneo</div>
+                    <div class="feature-desc">Resultados en segundos. Perfecto para inversores, usuarios, o reguladores que necesitan evaluación rápida.</div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 AI Ethics Detector - Construyendo transparencia en el ecosistema de IA</p>
+        <p>🌟 Servicio gratuito - Sin sesgos, sin agenda, solo verdad</p>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
