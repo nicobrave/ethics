@@ -14,7 +14,7 @@ class AIAnalyzer:
     def __init__(self):
         if settings.GOOGLE_API_KEY:
             genai.configure(api_key=settings.GOOGLE_API_KEY)
-            self.gemini_client = genai.GenerativeModel('gemini-2.5-pro')
+            self.gemini_client = genai.GenerativeModel('gemini-1.5-pro')
         else:
             self.gemini_client = None
     
